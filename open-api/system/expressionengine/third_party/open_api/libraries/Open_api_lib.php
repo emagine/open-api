@@ -276,8 +276,9 @@ class Open_api_lib
 		// load channel data library
 		$this->_load_library('channel_data');
 
+		// vanilla entry fields info
 		$data = $this->EE->channel_data_lib->get_channel_entries($vars['channel_id'], $vars['select'], $vars['where'], $vars['order_by'], $vars['sort'], $vars['limit'], $vars['offset'])->result();
-
+		
 		$this->response($data);
 	}
 	

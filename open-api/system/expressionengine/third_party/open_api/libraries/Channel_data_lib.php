@@ -528,7 +528,7 @@ if(!class_exists('Channel_data_lib'))
 		{
 			return $this->get('channel_fields', $select, $where, $order_by, $sort, $limit, $offset);
 		}
-
+		
 		/**
 		 * An alias to get_channel_field and get_custom_field.
 		 *
@@ -877,6 +877,8 @@ if(!class_exists('Channel_data_lib'))
 			if($channel_id !== FALSE)
 			{
 				$fields	 = $this->get_channel_fields($channel_id)->result();
+				
+				// get matrix fields pulling from this entry_id?
 
 				if(is_array($where))
 					$where_array = array_merge($where_array, $where);
@@ -886,6 +888,9 @@ if(!class_exists('Channel_data_lib'))
 			else
 			{
 				$fields  = $this->get_fields()->result();
+				
+				// add in get matrix fields?
+				
 				$select	 = array();
 			}
 
@@ -893,6 +898,9 @@ if(!class_exists('Channel_data_lib'))
 
 			// Selects the appropriate field name and converts where converts
 			// where parameters to their corresponding field_id's
+			
+			// might have to change this or add the matrix cols with the corresponding col_id_?
+			
 			$field_array = array();
 
 			foreach($fields as $field)
@@ -936,8 +944,10 @@ if(!class_exists('Channel_data_lib'))
 			$where = $where_array;
 
 			// Joins the channel_data table
-
 			$this->EE->db->join('channel_data', 'channel_titles.entry_id = channel_data.entry_id');
+			
+			// join the matrix data table?
+			$this->EE->db->join('matrix_data', 'matrix_data.entry_id = channel_data.entry_id');
 
 			$params = array(
 				'select' 	=> $select,
